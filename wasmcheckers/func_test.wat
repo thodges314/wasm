@@ -55,7 +55,7 @@
 
 	;; removes a crown from a given piece (no mutation)
 	(func $withoutCrown (param $piece i32) (result i32)
-		(i32.and (get_local $piece) (132.const 3))
+		(i32.and (get_local $piece) (i32.const 3))
 	)
 
 	(export "offsetForPosition" (func $offsetForPosition))
