@@ -3,6 +3,7 @@
 	(global $WHITE i32 (i32.const 2))
 	(global $BLACK i32 (i32.const 1))
 	(global $CROWN i32 (i32.const 4))
+	(global (mut i32) (i32.const 0))
 
 
 	;; index = (x + y*8)
@@ -106,5 +107,66 @@
 			(i32.ge_s (get_local $value) (get_local $low))
 			(i32.le_s (get_local $value) (get_local $high))
 		)
+	)
+
+	;; gets the current turn owner
+	(func $getTurnOwner (result i32)
+		(get_global $current_turn)
+	)
+
+	;; at the end of a turn, switch the turn over to the other player
+	(func $toggleTurnOwner
+		(if (i32.eq (call $getTurnOwner) (i32.const 1))
+			(then (call $setTurnOwner (i32.const 2)))
+			(else (call $setTurnOwner (i32.const 1)))
+		)
+	)
+
+	;; set the turn owner
+	(func $setTurnOwner (param $piece i32)
+		(set_global $current_turn (get_local $piece))
+	)
+
+	;; determine if it's a player's turn
+	(func $isPlayersTurn (param $player i32) (result i32)
+		(i32.gt_s
+			(i32.and (get_local $player) (call $getTurnOwner))
+			(i32.const 0)
+		)
+	)
+
+	;; should this piece be crowned?
+	;; crown black pieces in row 0, and white pieces in row 7
+	;; piece y is the y coordinate of the piece
+	(func $shouldCrown (param $pieceY i32) (param $piece i32) (result i32)
+		(i32.or
+			(i32.and
+				(i32.eq
+					(get_local $pieceY)
+					(i32.const 0)
+				)
+				(call $isBlack (get_local $piece))
+			)
+			(i32.and
+				(i32.eq
+					(get_local $pieceY)
+					(i32.const 7)
+				)
+				(call $isWhite (get_local $piece))
+			)
+		)
+	)
+
+	;; converts a piece into a crowned piece and alerts a host notifier
+	(func $crownPiece (param $x i32) (param $y i32)
+		(local $piece i32)
+		(set_local $piece (call $getPiece (get_local $x) (get_local $y)))
+		(call $setPiece (get_local $x) (get_local $y) (call $withCrown(get_local $piece)))
+		(call $notify_piecescrowned (get_local $x) (get_local $y))
+	)
+
+	;; distance function that we learn about soon
+	(func $distance (param $x i32) (param $y i32) (result i32)
+		(i32.sub (get_local $x) (get_local $y))
 	)
 )
