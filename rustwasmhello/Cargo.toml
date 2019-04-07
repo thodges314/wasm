@@ -1,0 +1,7 @@
+[package]
+name = "rustwasmhello"
+version = "0.1.0"
+authors = ["Thomas Hodges <thodges@javascriptonline.org>"]
+edition = "2018"
+
+[dependencies]
