@@ -13,6 +13,12 @@ pub struct GamePiece {
 #[derive(Debug, Clone, PartialEq, Copy)]
 pub struct Coordinate(pub usize, pub usize);
 
+#[derive(Debug, Clone, PartialEq, Copy)]
+pub struct Move {
+    pub from: Coordinate,
+    pub to: Coordinate,
+}
+
 impl GamePiece {
     pub fn new(color: PieceColor) -> GamePiece {
         GamePiece {
@@ -66,5 +72,14 @@ impl Coordinate {
             moves.push(Coordinate(x - 1, y - 1));
         }
         moves.into_iter()
+    }
+}
+
+impl Move {
+    pub fn new(from: (usize, usize), to: (usize, usize)) -> Move {
+        Move {
+            from: Coordinate(from.0, from.1),
+            to: Coordinate(to.0, to.1),
+        }
     }
 }
