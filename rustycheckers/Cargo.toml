@@ -7,3 +7,5 @@ authors = ["Thomas Hodges <thodges@javascriptonline.org>"]
 crate-type = ["cdylib"]
 
 [dependencies]
+mut_static = "5.0.0"
+lazy_static = "1.0.2"

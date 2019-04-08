@@ -208,4 +208,17 @@ impl GameEngine {
             None => None,
         }
     }
+
+    pub fn get_piece(&self, coord: Coordinate) -> Result<Option<GamePiece>, ()> {
+        let Coordinate(x, y) = coord;
+        if x <= 7 && y <= 7 {
+            Ok(self.board[x][y])
+        } else {
+            Err(())
+        }
+    }
+
+    pub fn current_turn(&self) -> PieceColor {
+        self.current_turn
+    }
 }
