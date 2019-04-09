@@ -1,0 +1,1 @@
+/home/thodges/Workspace/wasm/rustycheckers/target/wasm32-unknown-unknown/release/rustycheckers.wasm: /home/thodges/Workspace/wasm/rustycheckers/src/board.rs /home/thodges/Workspace/wasm/rustycheckers/src/game.rs /home/thodges/Workspace/wasm/rustycheckers/src/lib.rs
